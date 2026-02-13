@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        /* --- DESIGN (CSS) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Pink Gradient Background */
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Scrollbar hatane ke liye */
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative; /* Button move hone ke liye zaroori hai */
+            height: 60px; /* Space fix karne ke liye */
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            background-color: #ff4d6d; /* Dark Pink */
+            color: white;
+            z-index: 10;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        .no-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            position: absolute; /* Button ko free move karane ke liye */
+            right: 40px; /* Initial position */
+        }
+
+        /* Success Message styling */
+        #success-screen {
+            display: none;
+        }
+
+        #success-screen img {
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .container { padding: 30px; }
+            .btn { padding: 10px 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="main-screen">
+            <h1>MY LADDU ❤️</h1> <p>Will you be my Valentine?</p>
+            
+            <div class="buttons">
+                <button class="btn yes-btn" onclick="sayYes()">Yes 🥰</button>
+                <button class="btn no-btn" id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()">No 😒</button>
+            </div>
+        </div>
+
+        <div id="success-screen">
+            <h1>YAYYY!! 🎉</h1>
+            <p>I knew you would say Yes! ❤️😘</p>
+            <p>I Love You! 🌹</p>
+            <img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="Happy Dance">
+        </div>
+    </div>
+
+    <script>
+        /* --- LOGIC (JavaScript) --- */
+        
+        // "No" button ko bhagane wala function
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const container = document.querySelector('.container');
+            
+            // Container ki size pata karein
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            // Random jagah calculate karein (sirf container ke andar nahi, puri screen par bhi bhej sakte hain)
+            // Lekin user friendly rakhne ke liye hum ise thoda door bhejenge
+            
+            const maxX = window.innerWidth - btnRect.width - 50;
+            const maxY = window.innerHeight - btnRect.height - 50;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            // Button ki position change karein
+            noBtn.style.position = 'fixed'; // Screen ke hisab se move karega
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // "Yes" button click karne par kya hoga
+        function sayYes() {
+            document.getElementById('main-screen').style.display = 'none';
+            document.getElementById('success-screen').style.display = 'block';
+            
+            // Optional: Background music play kar sakte hain agar browser allow kare
+        }
+    </script>
+</body>
+</html>
